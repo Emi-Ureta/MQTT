@@ -10,12 +10,12 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MQTT Android"
+        android:text="@string/mqtt_android"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintVertical_bias="0.147" />
 
@@ -29,7 +29,7 @@
         android:layout_marginStart="83dp"
         android:layout_marginTop="151dp"
         android:layout_marginEnd="87dp"
-        android:text="Enviar"
+        android:text="@string/enviar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.523"
@@ -46,13 +46,14 @@
         android:layout_marginEnd="101dp"
         android:layout_marginBottom="153dp"
         android:ems="10"
-        android:hint="Escriba su mensaje"
+        android:hint="@string/escriba_su_mensaje"
         android:inputType="textPersonName"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/BtEnviar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:autofillHints="" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

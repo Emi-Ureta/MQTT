@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MQTT</string>
+    <string name="mqtt_android">MQTT Android</string>
+    <string name="enviar">Enviar</string>
+    <string name="escriba_su_mensaje">Escriba su mensaje</string>
 </resources>

@@ -19,13 +19,17 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MainActivity extends AppCompatActivity {
 
     private final MemoryPersistence persistence = new MemoryPersistence();
-    private EditText mensaje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //++++++++++++++++++++++++++++++++++++++++++++
+
+        // datos dados por el profesor
+        // serverURL = "mqtt://test.mosquitto.org:1883"
+        // clientId = "SensorSantos"
+        // topic = "/test"
+
         final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.emqx.io:1883", "AndroidMQTT", persistence);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
@@ -44,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mensaje = (EditText) findViewById(R.id.EditText_mensaje) ;
+        EditText mensaje = findViewById(R.id.EditText_mensaje);
 
-        Button enviar = (Button) findViewById(R.id.BtEnviar);
+        Button enviar = findViewById(R.id.BtEnviar);
         enviar.setOnClickListener(view -> {
 
 
