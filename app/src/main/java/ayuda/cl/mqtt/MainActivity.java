@@ -3,6 +3,8 @@ package ayuda.cl.mqtt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -16,15 +18,15 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MqttAndroidClient client;
     private final MemoryPersistence persistence = new MemoryPersistence();
+    private EditText mensaje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //++++++++++++++++++++++++++++++++++++++++++++
-        final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.emqx.io:1883", "jajanoseayuda", persistence);
+        final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.emqx.io:1883", "AndroidMQTT", persistence);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
@@ -42,31 +44,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-        mqttConnectOptions.setCleanSession(true);
-        try {
-            mqttAndroidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
-                @Override
-                public void onSuccess(IMqttToken asyncActionToken) {
-                    System.out.println("La conexión fue exitosa");
-                    try {
-                        System.out.println("Suscribiendose a /test");
-                        mqttAndroidClient.subscribe("android/mqtt", 0);
-                        System.out.println("Suscrito a /test");
-                        System.out.println("Publicando mensaje...");
-                        mqttAndroidClient.publish("android/mqtt", new MqttMessage("Hola, quiero un 7 por favor...".getBytes()));
-                    } catch (MqttException ex) {
-                        ex.printStackTrace();
+        mensaje = (EditText) findViewById(R.id.EditText_mensaje) ;
+
+        Button enviar = (Button) findViewById(R.id.BtEnviar);
+        enviar.setOnClickListener(view -> {
+
+
+
+            MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+            mqttConnectOptions.setCleanSession(true);
+            try {
+                mqttAndroidClient.connect(mqttConnectOptions, null, new IMqttActionListener() {
+                    @Override
+                    public void onSuccess(IMqttToken asyncActionToken) {
+
+                        String Mensaje = mensaje.getText().toString();
+
+                        System.out.println("La conexión fue exitosa");
+                        try {
+                            System.out.println("Suscribiendose a android/mqtt");
+                            mqttAndroidClient.subscribe("android/mqtt", 0);
+                            System.out.println("Suscrito a android/mqtt");
+                            System.out.println("Publicando mensaje...");
+                            mqttAndroidClient.publish("android/mqtt", new MqttMessage(Mensaje.getBytes()));
+                        } catch (MqttException ex) {
+                            ex.printStackTrace();
+                        }
                     }
-                }
-                @Override
-                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    System.out.println("Ha ocurrido un error al conectarse");
-                    System.out.println("throwable: " + exception.toString());
-                }
-            });
-        } catch (MqttException ex) {
-            System.out.println(ex);
-        }
+                    @Override
+                    public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                        System.out.println("Ha ocurrido un error al conectarse");
+                        System.out.println("throwable: " + exception.toString());
+                    }
+                });
+            } catch (MqttException ex) {
+                System.out.println(ex);
+            }
+        });
+
     }
 }
