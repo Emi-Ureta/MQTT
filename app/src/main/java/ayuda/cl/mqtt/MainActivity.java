@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //++++++++++++++++++++++++++++++++++++++++++++
-        final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "mqtt://test.mosquitto.org:1883", "SensorSantos", persistence);
+        final MqttAndroidClient mqttAndroidClient = new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.emqx.io:1883", "jajanoseayuda", persistence);
         mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("La conexión fue exitosa");
                     try {
                         System.out.println("Suscribiendose a /test");
-                        mqttAndroidClient.subscribe("/test", 0);
+                        mqttAndroidClient.subscribe("android/mqtt", 0);
                         System.out.println("Suscrito a /test");
                         System.out.println("Publicando mensaje...");
-                        mqttAndroidClient.publish("/test", new MqttMessage("Hola, quiero un 7 por favor...".getBytes()));
+                        mqttAndroidClient.publish("android/mqtt", new MqttMessage("Hola, quiero un 7 por favor...".getBytes()));
                     } catch (MqttException ex) {
                         ex.printStackTrace();
                     }
