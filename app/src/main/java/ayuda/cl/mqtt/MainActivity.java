@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
                         System.out.println("La conexión fue exitosa");
                         try {
-                            System.out.println("Suscribiendose a android/emi/mqtt");
-                            mqttAndroidClient.subscribe("android/emi/mqtt", 0);
-                            System.out.println("Suscrito a android/emi/mqtt");
+                            System.out.println("Suscribiendose a android/mqtt");
+                            mqttAndroidClient.subscribe("android/mqtt", 0);
+                            System.out.println("Suscrito a android/mqtt");
                             System.out.println("Publicando mensaje...");
-                            mqttAndroidClient.publish("android/emi/mqtt", new MqttMessage(Mensaje.getBytes()));
+                            mqttAndroidClient.publish("android/mqtt", new MqttMessage(Mensaje.getBytes()));
                         } catch (MqttException ex) {
                             ex.printStackTrace();
                         }
